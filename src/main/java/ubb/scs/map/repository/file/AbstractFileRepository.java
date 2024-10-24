@@ -7,7 +7,7 @@ import ubb.scs.map.repository.memory.InMemoryRepository;
 import java.io.*;
 
 public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends InMemoryRepository<ID, E> {
-    private String filename;
+    private final String filename;
 
     public AbstractFileRepository(Validator<E> validator, String fileName) {
         super(validator);
@@ -56,8 +56,6 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
                 E entity = createEntity(line);
                 entities.put(entity.getId(), entity);
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

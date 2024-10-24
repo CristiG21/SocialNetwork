@@ -3,7 +3,6 @@ package ubb.scs.map.repository.file;
 import ubb.scs.map.domain.Utilizator;
 import ubb.scs.map.domain.validators.Validator;
 
-import java.util.Collection;
 import java.util.Collections;
 
 public class UtilizatorRepository extends AbstractFileRepository<Long, Utilizator> {
@@ -21,8 +20,7 @@ public class UtilizatorRepository extends AbstractFileRepository<Long, Utilizato
 
     @Override
     public String saveEntity(Utilizator entity) {
-        String s = entity.getId() + ";" + entity.getFirstName() + ";" + entity.getLastName();
-        return s;
+        return entity.getId() + ";" + entity.getFirstName() + ";" + entity.getLastName();
     }
 
     @Override

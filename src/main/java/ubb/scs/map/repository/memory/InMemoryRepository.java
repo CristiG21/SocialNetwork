@@ -11,12 +11,12 @@ import java.util.Map;
 
 public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<ID, E> {
 
-    private Validator<E> validator;
+    private final Validator<E> validator;
     protected Map<ID, E> entities;
 
     public InMemoryRepository(Validator<E> validator) {
         this.validator = validator;
-        entities = new HashMap<ID, E>();
+        entities = new HashMap<>();
     }
 
     @Override

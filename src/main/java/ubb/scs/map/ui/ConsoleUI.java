@@ -26,7 +26,6 @@ public class ConsoleUI extends AbstractUI {
 
     public void run() {
         cin = new Scanner(System.in);
-        String email1, email2, email;
 
         while (true) {
             System.out.print(">>> ");
@@ -108,7 +107,7 @@ public class ConsoleUI extends AbstractUI {
     }
 
     public void removeUtilizator() {
-        Long id;
+        long id;
         try {
             System.out.print("Utilizator Id: ");
             id = Long.parseLong(cin.nextLine());
@@ -124,7 +123,7 @@ public class ConsoleUI extends AbstractUI {
     }
 
     public void addPrietenie() {
-        Long utilizator1Id, utilizator2Id;
+        long utilizator1Id, utilizator2Id;
         try {
             System.out.print("First Utilizator Id: ");
             utilizator1Id = Long.parseLong(cin.nextLine());
@@ -139,7 +138,7 @@ public class ConsoleUI extends AbstractUI {
     }
 
     public void removePrietenie() {
-        Long id;
+        long id;
         try {
             System.out.print("Prietenie Id: ");
             id = Long.parseLong(cin.nextLine());

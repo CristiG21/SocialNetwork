@@ -12,7 +12,7 @@ public class UtilizatorValidator implements Validator<Utilizator> {
      */
     @Override
     public void validate(Utilizator entity) throws ValidationException {
-        if (entity.getFirstName().equals("") || entity.getLastName().equals(""))
+        if (entity.getFirstName().isEmpty() || entity.getLastName().isEmpty())
             throw new ValidationException("Utilizatorul nu este valid!");
     }
 }

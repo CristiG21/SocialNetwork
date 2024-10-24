@@ -15,9 +15,6 @@ public class Service {
     private Repository<Long, Utilizator> repoUtilizator;
     private Repository<Long, Prietenie> repoPrietenie;
 
-    private Service() {
-    }
-
     private Service(Repository<Long, Utilizator> repoUtilizator, Repository<Long, Prietenie> repoPrietenie) {
         this.repoUtilizator = repoUtilizator;
         this.repoPrietenie = repoPrietenie;

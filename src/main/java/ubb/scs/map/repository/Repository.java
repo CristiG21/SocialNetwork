@@ -4,8 +4,6 @@ package ubb.scs.map.repository;
 import ubb.scs.map.domain.Entity;
 import ubb.scs.map.domain.validators.ValidationException;
 
-import java.util.Collections;
-
 /**
  * CRUD operations repository interface
  *
@@ -51,7 +49,7 @@ public interface Repository<ID, E extends Entity<ID>> {
     /**
      * @param entity entity must not be null
      * @return null - if the entity is updated,
-     * otherwise  returns the entity  - (e.g id does not exist).
+     * otherwise  returns the entity  - (e.g. id does not exist).
      * @throws IllegalArgumentException if the given entity is null.
      * @throws ValidationException      if the entity is not valid.
      */
