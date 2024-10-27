@@ -5,15 +5,12 @@ import ubb.scs.map.domain.Utilizator;
 import ubb.scs.map.exceptions.ServiceException;
 import ubb.scs.map.repository.Repository;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Service {
     private static Service instance = null;
-    private Repository<Long, Utilizator> repoUtilizator;
-    private Repository<Long, Prietenie> repoPrietenie;
+    private final Repository<Long, Utilizator> repoUtilizator;
+    private final Repository<Long, Prietenie> repoPrietenie;
 
     private Service(Repository<Long, Utilizator> repoUtilizator, Repository<Long, Prietenie> repoPrietenie) {
         this.repoUtilizator = repoUtilizator;
@@ -33,7 +30,7 @@ public class Service {
         repoUtilizator.save(utilizator);
     }
 
-    public Utilizator removeUtilizator(Long id) {
+    public Optional<Utilizator> removeUtilizator(Long id) {
         for (Prietenie prietenie : repoPrietenie.findAll()) {
             if (prietenie.getUtilizator1Id().equals(id) || prietenie.getUtilizator2Id().equals(id)) {
                 repoPrietenie.delete(prietenie.getId());
@@ -42,7 +39,7 @@ public class Service {
         return repoUtilizator.delete(id);
     }
 
-    public Utilizator getUtilizator(Long id) {
+    public Optional<Utilizator> getUtilizator(Long id) {
         return repoUtilizator.findOne(id);
     }
 
@@ -51,7 +48,7 @@ public class Service {
     }
 
     public void addPrietenie(Long user1Id, Long user2Id) {
-        if (repoUtilizator.findOne(user1Id) == null || repoUtilizator.findOne(user2Id) == null) {
+        if (repoUtilizator.findOne(user1Id).isEmpty() || repoUtilizator.findOne(user2Id).isEmpty()) {
             throw new ServiceException("Id doesn't exist!");
         }
         if (user1Id.equals(user2Id)) {
@@ -63,7 +60,7 @@ public class Service {
         repoPrietenie.save(prietenie);
     }
 
-    public Prietenie removePrietenie(Long id) {
+    public Optional<Prietenie> removePrietenie(Long id) {
         return repoPrietenie.delete(id);
     }
 
@@ -120,7 +117,8 @@ public class Service {
 
         List<Utilizator> sociableCommunityUtilizatori = new ArrayList<>();
         for (Long u : sociableCommunity) {
-            sociableCommunityUtilizatori.add(repoUtilizator.findOne(u));
+            Optional<Utilizator> utilizator = repoUtilizator.findOne(u);
+            utilizator.ifPresent(sociableCommunityUtilizatori::add);
         }
 
         return sociableCommunityUtilizatori;

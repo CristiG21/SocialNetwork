@@ -6,6 +6,7 @@ import ubb.scs.map.domain.validators.ValidationException;
 import ubb.scs.map.exceptions.ServiceException;
 import ubb.scs.map.service.Service;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ConsoleUI extends AbstractUI {
@@ -116,7 +117,7 @@ public class ConsoleUI extends AbstractUI {
             return;
         }
 
-        if (service.removeUtilizator(id) == null)
+        if (service.removeUtilizator(id).isEmpty())
             System.out.println("Given id doesn't exist!");
         else
             System.out.println("Utilizator removed!");
@@ -147,7 +148,7 @@ public class ConsoleUI extends AbstractUI {
             return;
         }
 
-        if (service.removePrietenie(id) == null)
+        if (service.removePrietenie(id).isEmpty())
             System.out.println("Given id doesn't exist!");
         else
             System.out.println("Prietenie removed!");
@@ -155,8 +156,9 @@ public class ConsoleUI extends AbstractUI {
 
     public void printPrietenie(Prietenie prietenie) {
         System.out.print("id=" + prietenie.getId() + ", ");
-        Utilizator utilizator1 = service.getUtilizator(prietenie.getUtilizator1Id());
-        Utilizator utilizator2 = service.getUtilizator(prietenie.getUtilizator2Id());
-        System.out.println("(" + utilizator1 + ") <-> (" + utilizator2 + ")");
+        Optional<Utilizator> utilizator1 = service.getUtilizator(prietenie.getUtilizator1Id());
+        Optional<Utilizator> utilizator2 = service.getUtilizator(prietenie.getUtilizator2Id());
+        if (utilizator1.isPresent() && utilizator2.isPresent())
+            System.out.println("(" + utilizator1.get() + ") <-> (" + utilizator2.get() + ")");
     }
 }

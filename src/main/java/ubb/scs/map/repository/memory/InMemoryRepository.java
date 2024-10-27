@@ -8,11 +8,12 @@ import ubb.scs.map.repository.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<ID, E> {
 
     private final Validator<E> validator;
-    protected Map<ID, E> entities;
+    protected final Map<ID, E> entities;
 
     public InMemoryRepository(Validator<E> validator) {
         this.validator = validator;
@@ -20,10 +21,10 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     }
 
     @Override
-    public E findOne(ID id) {
+    public Optional<E> findOne(ID id) {
         if (id == null)
             throw new IllegalArgumentException("Id cannot be null!");
-        return entities.get(id);
+        return Optional.ofNullable(entities.get(id));
     }
 
     @Override
@@ -32,34 +33,28 @@ public class InMemoryRepository<ID, E extends Entity<ID>> implements Repository<
     }
 
     @Override
-    public E save(E entity) throws ValidationException {
+    public Optional<E> save(E entity) throws ValidationException {
         if (entity == null)
             throw new IllegalArgumentException("Entity cannot be null!");
         validator.validate(entity);
-        if (entities.containsKey(entity.getId()))
-            return entity;
-        else {
-            entities.put(entity.getId(), entity);
-            return null;
-        }
+
+        return Optional.ofNullable(entities.putIfAbsent(entity.getId(), entity));
     }
 
     @Override
-    public E delete(ID id) {
+    public Optional<E> delete(ID id) {
         if (id == null)
             throw new IllegalArgumentException("Id cannot be null!");
-        return entities.remove(id);
+        return Optional.ofNullable(entities.remove(id));
     }
 
     @Override
-    public E update(E entity) {
+    public Optional<E> update(E entity) {
         if (entity == null)
             throw new IllegalArgumentException("Entity nu poate fi null!");
         validator.validate(entity);
         E result = entities.put(entity.getId(), entity);
-        if (result == null)
-            return entity;
-        return null;
+        return result == null ? Optional.of(entity) : Optional.empty();
     }
 
     @Override

@@ -12,9 +12,9 @@ public class PrietenieRepository extends AbstractFileRepository<Long, Prietenie>
 
     @Override
     public Prietenie createEntity(String line) {
-        String[] splited = line.split(";");
-        Prietenie u = new Prietenie(Long.parseLong(splited[1]), Long.parseLong(splited[2]));
-        u.setId(Long.parseLong(splited[0]));
+        String[] splitted = line.split(";");
+        Prietenie u = new Prietenie(Long.parseLong(splitted[1]), Long.parseLong(splitted[2]));
+        u.setId(Long.parseLong(splitted[0]));
         return u;
     }
 

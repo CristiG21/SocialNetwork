@@ -18,12 +18,9 @@ public class Utilizator extends Entity<Long> {
         return firstName;
     }
 
-    /**
-     * @param firstName the new value of the first name
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    //    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
+//    }
 
     /**
      * @return the last name of the user
@@ -32,12 +29,9 @@ public class Utilizator extends Entity<Long> {
         return lastName;
     }
 
-    /**
-     * @param lastName the new value of the last name
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+//    public void setLastName(String lastName) {
+//        this.lastName = lastName;
+//    }
 
     @Override
     public String toString() {
