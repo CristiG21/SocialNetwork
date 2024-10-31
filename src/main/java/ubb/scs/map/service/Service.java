@@ -31,11 +31,11 @@ public class Service {
     }
 
     public Optional<Utilizator> removeUtilizator(Long id) {
-        for (Prietenie prietenie : repoPrietenie.findAll()) {
+        repoPrietenie.findAll().forEach(prietenie -> {
             if (prietenie.getUtilizator1Id().equals(id) || prietenie.getUtilizator2Id().equals(id)) {
                 repoPrietenie.delete(prietenie.getId());
             }
-        }
+        });
         return repoUtilizator.delete(id);
     }
 
@@ -87,13 +87,13 @@ public class Service {
         vizUtilizatori.add(utilizatorId);
         component.add(utilizatorId);
 
-        for (Prietenie p : repoPrietenie.findAll()) {
+        repoPrietenie.findAll().forEach(p -> {
             if (p.getUtilizator1Id().equals(utilizatorId) && !vizUtilizatori.contains(p.getUtilizator2Id())) {
                 component.addAll(dfs(p.getUtilizator2Id(), vizUtilizatori));
             } else if (p.getUtilizator2Id().equals(utilizatorId) && !vizUtilizatori.contains(p.getUtilizator1Id())) {
                 component.addAll(dfs(p.getUtilizator1Id(), vizUtilizatori));
             }
-        }
+        });
 
         return component;
     }

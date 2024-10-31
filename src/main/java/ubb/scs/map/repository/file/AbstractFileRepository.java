@@ -40,11 +40,16 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
 
     private void writeToFile() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            for (E entity : entities.values()) {
-                String ent = saveEntity(entity);
-                writer.write(ent);
-                writer.newLine();
-            }
+            entities.values().stream().map(this::saveEntity).forEach(entity -> writeEntityToFile(writer, entity));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void writeEntityToFile(BufferedWriter writer, String entity) {
+        try {
+            writer.write(entity);
+            writer.newLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
